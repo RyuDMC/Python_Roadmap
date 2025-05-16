@@ -2,7 +2,9 @@
 
 ## Index
 
-## [TODO List](https://github.com/RyuDMC/Python_Roadmap?tab=readme-ov-file#todo-list)
+#### [✅ TODO List](https://github.com/RyuDMC/Python_Roadmap?tab=readme-ov-file#todo-list)
+
+#### [GitHub User Activity]()
 
 ### Todo List
 [Statement](https://roadmap.sh/projects/task-tracker)
