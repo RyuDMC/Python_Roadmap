@@ -1,15 +1,14 @@
 import json
 import requests
 
-
-username = "VIRUSGAMING64"
+print("Inserte nombre de usuario: ")
+username = str(input())
 
 response = requests.get("https://api.github.com/users/{}/events/public".format(username))
 
 if response.status_code == 200:
-  eventos = json.loads(response.text)
-
   from aux_functions import show
   from aux_functions import add_event
-  add_event()
-  show()
+  
+  resume = add_event(eventos= json.loads(response.text))
+  show(resume)

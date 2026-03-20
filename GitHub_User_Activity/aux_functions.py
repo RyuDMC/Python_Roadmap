@@ -1,10 +1,8 @@
 from collections import defaultdict
-from main import eventos as eventos
-from main import response as response
 
-resume = defaultdict(lambda: defaultdict(int))
+def add_event(eventos):
+  resume = defaultdict(lambda: defaultdict(int))
 
-def add_event():
   for evento in eventos:
     tipo = evento["type"]
     repo_name = evento["repo"]["name"]
@@ -12,17 +10,27 @@ def add_event():
     if tipo == "PushEvent":
       resume[repo_name]["pushes"] += 1
     elif tipo == "PullRequestEvent":
-      resume[repo_name]["pulls"] += 1
+      action = evento["payload"]["action"]
+      if action == "opened":
+        resume[repo_name]["pull_request_opened"]+= 1
+      elif action == "closed":
+        resume[repo_name]["pull_request_closed"] += 1
     elif tipo == "WatchEvent":
       resume[repo_name]["stars"] += 1
     elif tipo == "CommitCommentEvent":
       resume[repo_name]["commits"] += 1
     elif tipo == "CreateEvent":
-      created = evento["ref_type"]
-      resume[repo_name]["create"] += [created]
+      created = evento["payload"].get("ref_type", "")
+      if created == "branch":
+        resume[repo_name]["branch"] += 1
+      elif created == "repository":
+        resume[repo_name]["repository"] += 1
     elif tipo == "RemoveEvent":
-      removed = evento["ref_type"]
-      resume[repo_name]["remove"] += [removed]
+      removed = evento["payload"].get("ref_type", "")
+      if removed == "branch":
+        resume[repo_name]["branch"] += 1
+      elif removed == "repository":
+        resume[repo_name]["repository"] += 1
     elif tipo == "DiscussionEvent":
       resume[repo_name]["discussion"] += 1
     elif tipo == "GollumEvent":
@@ -30,27 +38,28 @@ def add_event():
     elif tipo == "IssueCommentEvent":
       resume[repo_name]["issuecomment"] += 1
     elif tipo == "IssuesEvent":
-      action = evento["action"]
+      action = evento["payload"].get("ref_type", "")
       if action == "opened":
-        resume[repo_name]["issues"]["opened"] += 1
+        resume[repo_name]["issues_opened"] += 1
       elif action == "closed":
-        resume[repo_name]["issues"]["closed"] += 1
+        resume[repo_name]["issues_closed"] += 1
       else:
-        response[repo_name]["issues"]["reopened"] += 1
-    elif tipo == "MemberEvent":
-      member = evento["member"]
-      response[repo_name]["members"] += member
+        resume[repo_name]["issues_reopened"] += 1
     elif tipo == "PublicEvent":
       resume[repo_name]["public"] = 1
     elif tipo == "LaunchEvent":
       resume[repo_name]["launched"] = 1
     else:
       print("Invalid Operation, ):")
+  return resume
 
-def show():
+def show(resume):
   for repo, actions in resume.items():
     if actions.get("pushes"):
       print(f" - Pushed {actions["pushes"]} commits to {repo}")
+    if actions.get("pull_request"):
+      print(f" - Opened{actions["pull_request_opened"]} pull requests in {repo}")
+      print(f" - Closed{actions["pull_request_closed"]} pull requests in {repo}")
     if actions.get("commits"):
       print(f" - Pushed {actions["commits"]} commits to {repo}")
     if actions.get("stars"):
