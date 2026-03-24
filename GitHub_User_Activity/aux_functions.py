@@ -10,11 +10,23 @@ def add_event(eventos):
     if tipo == "PushEvent":
       resume[repo_name]["pushes"] += 1
     elif tipo == "PullRequestEvent":
-      action = evento["payload"]["action"]
+      action = evento["payload"].get("action", "")
       if action == "opened":
         resume[repo_name]["pull_request_opened"]+= 1
       elif action == "closed":
         resume[repo_name]["pull_request_closed"] += 1
+      elif action == "merged":
+        resume[repo_name]["pull_request_merged"] += 1
+      elif action == "reopened":
+        resume[repo_name]["pull_request_reopened"] += 1
+      elif action == "assigned":
+        resume[repo_name]["pull_request_assigned"] += 1
+      elif action == "unassigned":
+        resume[repo_name]["pull_request_unassigned"] += 1
+      elif action == "labeled":
+        resume[repo_name]["pull_request_labeled"] += 1
+      elif action == "unlabeled":
+        resume[repo_name]["pull_request_unlabeled"] += 1
     elif tipo == "WatchEvent":
       resume[repo_name]["stars"] += 1
     elif tipo == "CommitCommentEvent":
@@ -25,16 +37,22 @@ def add_event(eventos):
         resume[repo_name]["branch"] += 1
       elif created == "repository":
         resume[repo_name]["repository"] += 1
+      elif created == "tag":
+        resume[repo_name]["tag"] += 1
     elif tipo == "RemoveEvent":
       removed = evento["payload"].get("ref_type", "")
       if removed == "branch":
         resume[repo_name]["branch"] += 1
       elif removed == "repository":
         resume[repo_name]["repository"] += 1
-    elif tipo == "DiscussionEvent":
+    elif tipo == "EventDiscussion":
       resume[repo_name]["discussion"] += 1
     elif tipo == "GollumEvent":
-      resume[repo_name]["page"] += 1
+      action = evento["pages"].get("action", "")
+      if action == "created":
+        resume[repo_name]["created_page"] += 1
+      elif action == "edited":
+        resume[repo_name]["edited_page"] += 1
     elif tipo == "IssueCommentEvent":
       resume[repo_name]["issuecomment"] += 1
     elif tipo == "IssuesEvent":
@@ -49,8 +67,12 @@ def add_event(eventos):
       resume[repo_name]["public"] = 1
     elif tipo == "LaunchEvent":
       resume[repo_name]["launched"] = 1
+    elif tipo == "ForkEvent":
+      resume[repo_name]["forked"] += 1
+    elif tipo == "MemberEvent":
+      resume[repo_name]["member"] += 1
     else:
-      print("Invalid Operation, ):")
+      print(tipo)
   return resume
 
 def show(resume):

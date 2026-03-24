@@ -12,3 +12,11 @@ if response.status_code == 200:
   
   resume = add_event(eventos= json.loads(response.text))
   show(resume)
+elif response.status_code == 301:
+  print("The info had moved to another URL")
+elif response.status_code == 403:
+  print("The requested info is forbidden")
+elif response.status_code == 404:
+  print("Info not found")
+else:
+  print("Something goes wrong, try it again")
