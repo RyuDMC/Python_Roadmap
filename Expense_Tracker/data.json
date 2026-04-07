@@ -1,1 +1,15 @@
-{"last_id": 2, "expenses": [1, "test", 20, 2, "test2", 50]}
+{
+  "last_id": 2,
+  "expenses": [
+    [
+      1,
+      "food",
+      100
+    ],
+    [
+      2,
+      "car",
+      200
+    ]
+  ]
+}

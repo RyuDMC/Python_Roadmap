@@ -1,16 +1,17 @@
+import os
 import json
 
-with open("/media/ryudmc/17bd76d4-00a3-4be2-a374-79313809c703/Oliver/Programing/Codes/Python/Python_Roadmap/Expense_Tracker/data.json", "r+") as jsonfile:
-  json.dump({"last_id" : 0, "expenses" : []}, jsonfile)
 
-from functionalities import add
+print("Select your operation: \n")
+print("1/ Add\n2/ Update\n3/ Delete\n4/ Show_All\n5/ Summary\n6/ Especific_Summary")
 
-add("test", 20)
+option = int(input())
 
-with open("/media/ryudmc/17bd76d4-00a3-4be2-a374-79313809c703/Oliver/Programing/Codes/Python/Python_Roadmap/Expense_Tracker/data.json", "r+") as jsonfile:
-  print(jsonfile)
-
-add("test2", 50)
-
-with open("/media/ryudmc/17bd76d4-00a3-4be2-a374-79313809c703/Oliver/Programing/Codes/Python/Python_Roadmap/Expense_Tracker/data.json", "r+") as jsonfile:
-  print("ID Description Amount")
+if option == 1:
+  print("Define your expense: ")
+  input = str(input()).split()
+  description = str(input[0])
+  amount = int(input[1])
+  
+  from functionalities import add
+  add(description, amount)
