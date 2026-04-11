@@ -1,0 +1,1 @@
+This is a basic CLI app to see the Github Activity of an specific user.
