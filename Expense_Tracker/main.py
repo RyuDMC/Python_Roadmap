@@ -11,6 +11,7 @@ if option == 1:
 
   from functionalities import add
   add(description, amount)
+
 elif option == 2:
   print("Select expense's ID: ")
   ID = int(input())
@@ -19,6 +20,7 @@ elif option == 2:
 
   from functionalities import update
   update(ID, amount)
+
 elif option == 3:
   print("Select expense's ID: ")
   ID = int(input())
