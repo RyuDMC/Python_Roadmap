@@ -27,3 +27,7 @@ elif option == 3:
 
   from functionalities import delete
   delete(ID)
+
+elif option == 4:
+  from functionalities import show
+  show()

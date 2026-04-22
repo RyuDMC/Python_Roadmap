@@ -1,1 +1,36 @@
-
+{
+  "last_id": 5,
+  "expenses": [
+    [
+      1,
+      "Sun Apr 12 15:28:28 2026",
+      "adssa",
+      23
+    ],
+    [
+      2,
+      "Sun Apr 12 15:28:39 2026",
+      "sadd",
+      213
+    ],
+    [
+      3,
+      "Sun Apr 12 15:28:45 2026",
+      "affa",
+      400
+    ],
+    [
+      4,
+      "Sun Apr 12 15:35:09 2026",
+      "sakfhnsdajhgasdjkghsdkgj",
+      200
+    ],
+    [
+      5,
+      "Tue Apr 21 21:25:27 2026",
+      "trash",
+      200
+    ]
+  ],
+  "max_description_size": 24
+}

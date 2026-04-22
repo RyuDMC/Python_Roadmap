@@ -10,13 +10,14 @@ def add(description, amount):
       try:
         data = json.load(jsonfile)
       except:
-        data = {"last_id" : 0, "expenses" : []}
+        data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11}
   else:
-    data = {"last_id" : 0, "expenses" : []}
+    data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11}
 
   new_id = data["last_id"] + 1
-  data["expenses"].append([new_id, time.ctime(), description, amount])
   data["last_id"] = new_id
+  data["expenses"].append([new_id, time.ctime(), description, amount])
+  data["max_description_size"] = len(description)
 
   with open(filename, "w") as jsonfile:
     json.dump(data, jsonfile, indent = 2)
@@ -45,6 +46,7 @@ def delete(id):
           id += 1
           i[0] = id
         data["last_id"] = id
+        data["max_description_size"] = max(data["max_description_size"], len(i[2]))
       else:
         print("Invalid ID")
 
@@ -54,7 +56,17 @@ def delete(id):
   else:
     print("Error, Empty List")
 
-##def show():
-##  if os.path.exists(filename) and os.path.getsize(filename) > 0:
-##    with open(filename, "r") as jsonfile:
-      
+def show():
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+      blank_spaces = data["max_description_size"] - 10
+      print(f"ID time {19 * " "} Description{blank_spaces * " "}Expense")
+      for items in data["expenses"]:
+        sub_blank_spaces = 1
+        if len(items[2]) > 11:
+          sub_blank_spaces = len(items[2]) - blank_spaces - 9
+        else:
+          sub_blank_spaces = blank_spaces + 11 - len(items[2])
+        print(f"{items[0]}  {items[1]} {items[2]}{sub_blank_spaces * " "}{items[3]}")
+        
