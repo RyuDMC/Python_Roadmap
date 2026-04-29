@@ -31,3 +31,14 @@ elif option == 3:
 elif option == 4:
   from functionalities import show
   show()
+
+elif option == 5:
+  from functionalities import summary
+  summary()
+
+elif option == 6:
+  print("Select a month")
+  month_name = str(input())
+  
+  from functionalities import month_summary
+  month_summary(month_name)

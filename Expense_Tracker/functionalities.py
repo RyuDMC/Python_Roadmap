@@ -70,3 +70,26 @@ def show():
           sub_blank_spaces = blank_spaces + 11 - len(items[2])
         print(f"{items[0]}  {items[1]} {items[2]}{sub_blank_spaces * " "}{items[3]}")
         
+def summary():
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    total_sum = 0
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+
+      for items in data["expenses"]:
+        total_sum += items[3]
+      
+    print(f"Total Expenses: {total_sum}")
+
+def month_summary(month_name):
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    total_sum = 0
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+      month_name = month_name[0] + month_name[1] + month_name[2]
+      
+      for items in data["expenses"]:
+        month = items[1].split()[1]
+        if month_name == month:
+          total_sum += items[3]
+    print(total_sum)
