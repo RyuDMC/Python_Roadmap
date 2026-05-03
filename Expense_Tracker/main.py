@@ -1,44 +1,57 @@
-print("Select your operation: \n")
-print("1/ Add\n2/ Update\n3/ Delete\n4/ Show_All\n5/ Summary\n6/ Especific_Summary")
+import argparse
 
-option = int(input())
+parse = argparse.ArgumentParser(description = "Expense Tracker")
+subparsers = parse.add_subparsers(dest = "command", help = "available commands")
 
-if option == 1:
-  print("Define your expense: ")
-  input = str(input()).split()
-  description = str(input[0])
-  amount = int(input[1])
+#command add
+parse_add = subparsers.add_parser("add", help = "add expense")
+parse_add.add_argument("--description", type = str, help = "expense's description")
+parse_add.add_argument("--amount", type = int, help = "amount")
 
-  from functionalities import add
-  add(description, amount)
+#command update
+parse_update = subparsers.add_parser("update", help = "update expense")
+parse_update.add_argument("--ID", type = int)
+parse_update.add_argument("--amount", type = int)
 
-elif option == 2:
-  print("Select expense's ID: ")
-  ID = int(input())
-  print("Define new amount: ")
-  amount = int(input())
+#command delete
+parse_delete = subparsers.add_parser("delete", help = "delete expense")
+parse_delete.add_argument("--ID", type = int)
 
-  from functionalities import update
-  update(ID, amount)
+#command list
+parse_list = subparsers.add_parser("list", help = "show all expenses")
 
-elif option == 3:
-  print("Select expense's ID: ")
-  ID = int(input())
+#command summary
+parse_summary = subparsers.add_parser("summary", help = "show summary of expense")
+parse_summary.add_argument("--mount", type = str)
 
+args = parse.parse_args()
+
+if args.command == "add":
+  if args.amount < 0:
+    print("Invalid amount")
+  else:
+    from functionalities import add
+    add(args.description, args.amount)
+
+elif args.command == "update":
+  if args.amount < 0:
+    print("Invalid amount")
+  else:
+    from functionalities import update
+    update(args.ID, args.amount)
+
+elif args.command == "delete":
   from functionalities import delete
-  delete(ID)
+  delete(args.ID)
 
-elif option == 4:
+elif args.command == "list":
   from functionalities import show
   show()
 
-elif option == 5:
-  from functionalities import summary
-  summary()
-
-elif option == 6:
-  print("Select a month")
-  month_name = str(input())
-  
-  from functionalities import month_summary
-  month_summary(month_name)
+elif args.command == "summary":
+  if args.mount:
+    from functionalities import month_summary
+    month_summary(args.month)
+  else: 
+    from functionalities import summary
+    summary()

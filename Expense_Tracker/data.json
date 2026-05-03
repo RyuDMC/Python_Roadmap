@@ -1,5 +1,5 @@
 {
-  "last_id": 5,
+  "last_id": 6,
   "expenses": [
     [
       1,
@@ -30,7 +30,13 @@
       "Tue Apr 21 21:25:27 2026",
       "trash",
       200
+    ],
+    [
+      6,
+      "Sun May  3 18:04:43 2026",
+      "Lunch23",
+      300
     ]
   ],
-  "max_description_size": 24
+  "max_description_size": 7
 }
