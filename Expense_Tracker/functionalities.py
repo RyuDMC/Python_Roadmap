@@ -27,7 +27,11 @@ def update(id, amount):
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
-
+      try:
+        data["expenses"][id - 1] in data["expenses"]
+      except IndexError:
+        print("Invalid ID")
+        return
       data["expenses"][id - 1] = amount
       data["expenses"][id - 1][1] = time.ctime()
     with open(filename, "w") as jsonfile:
@@ -39,6 +43,11 @@ def delete(id):
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
+      try:
+        data["expenses"][id - 1] in data["expenses"]
+      except IndexError:
+        print("Invalid ID")
+        return
       if data["expenses"][id - 1] in data["expenses"]:
         data["expenses"].remove(data["expenses"][id - 1])
         id = 0
@@ -47,9 +56,6 @@ def delete(id):
           i[0] = id
         data["last_id"] = id
         data["max_description_size"] = max(data["max_description_size"], len(i[2]))
-      else:
-        print("Invalid ID")
-
     with open(filename, "w") as jsonfile:
       json.dump(data, jsonfile, indent = 2)
       print(data)
