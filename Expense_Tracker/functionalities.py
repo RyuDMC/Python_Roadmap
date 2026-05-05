@@ -10,18 +10,14 @@ def add(description, amount):
       try:
         data = json.load(jsonfile)
       except:
-        data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11}
+        data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11, "budget" : {}}
   else:
-    data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11}
+    data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11, "budget": {}}
 
   new_id = data["last_id"] + 1
   data["last_id"] = new_id
   data["expenses"].append([new_id, time.ctime(), description, amount])
   data["max_description_size"] = len(description)
-
-  with open(filename, "w") as jsonfile:
-    json.dump(data, jsonfile, indent = 2)
-    print(data)
 
 def update(id, amount):
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
@@ -75,6 +71,8 @@ def show():
         else:
           sub_blank_spaces = blank_spaces + 11 - len(items[2])
         print(f"{items[0]}  {items[1]} {items[2]}{sub_blank_spaces * " "}{items[3]}")
+  else:
+    print("Error, Empty List")
         
 def summary():
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
@@ -84,18 +82,29 @@ def summary():
 
       for items in data["expenses"]:
         total_sum += items[3]
-      
-    print(f"Total Expenses: {total_sum}")
+    return total_sum
+  else:
+    print("Error, Empty List")
 
 def month_summary(month_name):
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     total_sum = 0
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
-      month_name = month_name[0] + month_name[1] + month_name[2]
+      month_name = month_name[:3]
       
       for items in data["expenses"]:
         month = items[1].split()[1]
         if month_name == month:
           total_sum += items[3]
-    print(total_sum)
+    return total_sum
+  else:
+    print("Error, Empty List")
+
+def set_budget(month_name, amount):
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+      data["budget"][month_name[:3]] = amount
+  else:
+    print("Error, Empty List")

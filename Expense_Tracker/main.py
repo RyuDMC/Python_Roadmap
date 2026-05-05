@@ -51,7 +51,7 @@ elif args.command == "list":
 elif args.command == "summary":
   if args.mount:
     from functionalities import month_summary
-    month_summary(args.month)
+    print(f"Total expenses: {month_summary(args.month)}")
   else: 
     from functionalities import summary
-    summary()
+    print(f"Total expenses: {summary()}")
