@@ -19,3 +19,5 @@ this are some examples:
 1/ add --description lunch --amount 300
 2/ delete --ID 3
 3/ update --ID 3 --amount 200
+
+Francis if you see some error tell to me, I didn't start the debbugin process.
