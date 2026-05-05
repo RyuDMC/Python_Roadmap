@@ -18,6 +18,10 @@ def add(description, amount):
   data["last_id"] = new_id
   data["expenses"].append([new_id, time.ctime(), description, amount])
   data["max_description_size"] = len(description)
+  
+  with open(filename, "w") as jsonfile:
+    json.dump(data, jsonfile, indent = 2)
+
 
 def update(id, amount):
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
@@ -54,7 +58,6 @@ def delete(id):
         data["max_description_size"] = max(data["max_description_size"], len(i[2]))
     with open(filename, "w") as jsonfile:
       json.dump(data, jsonfile, indent = 2)
-      print(data)
   else:
     print("Error, Empty List")
 
@@ -91,7 +94,8 @@ def month_summary(month_name):
     total_sum = 0
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
-      month_name = month_name[:3]
+      if len(month_name) > 3:
+        month_name = month_name[:3]
       
       for items in data["expenses"]:
         month = items[1].split()[1]
@@ -106,5 +110,18 @@ def set_budget(month_name, amount):
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
       data["budget"][month_name[:3]] = amount
+    
+    with open(filename, "w") as jsonfile:
+      json.dump(data, jsonfile, indent = 2)
   else:
     print("Error, Empty List")
+
+def check_budget():
+  month = time.ctime().split()[1]
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+      if month in data["budget"]:
+        amount = month_summary(month)
+        if amount > data["budget"][month]:
+          print(f"Month budget exceded")

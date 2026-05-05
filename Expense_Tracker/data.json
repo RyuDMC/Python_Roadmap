@@ -1,42 +1,87 @@
 {
-  "last_id": 6,
+  "last_id": 13,
   "expenses": [
     [
       1,
-      "Sun Apr 12 15:28:28 2026",
-      "adssa",
-      23
+      "Tue May  5 19:04:43 2026",
+      "lunch",
+      300
     ],
     [
       2,
-      "Sun Apr 12 15:28:39 2026",
-      "sadd",
-      213
+      "Tue May  5 19:12:11 2026",
+      "car",
+      600
     ],
     [
       3,
-      "Sun Apr 12 15:28:45 2026",
-      "affa",
-      400
+      "Tue May  5 19:12:29 2026",
+      "rocket",
+      5000
     ],
     [
       4,
-      "Sun Apr 12 15:35:09 2026",
-      "sakfhnsdajhgasdjkghsdkgj",
-      200
+      "Tue May  5 19:12:31 2026",
+      "rocket",
+      5000
     ],
     [
       5,
-      "Tue Apr 21 21:25:27 2026",
-      "trash",
-      200
+      "Tue May  5 19:14:45 2026",
+      "rocket",
+      5000
     ],
     [
       6,
-      "Sun May  3 18:04:43 2026",
-      "Lunch23",
-      300
+      "Tue May  5 19:14:47 2026",
+      "rocket",
+      5000
+    ],
+    [
+      7,
+      "Tue May  5 19:14:48 2026",
+      "rocket",
+      5000
+    ],
+    [
+      8,
+      "Tue May  5 19:15:44 2026",
+      "car",
+      600
+    ],
+    [
+      9,
+      "Tue May  5 19:15:55 2026",
+      "rocket",
+      5000
+    ],
+    [
+      10,
+      "Tue May  5 19:16:01 2026",
+      "rocket",
+      5000
+    ],
+    [
+      11,
+      "Tue May  5 19:17:04 2026",
+      "rocket",
+      5000
+    ],
+    [
+      12,
+      "Tue May  5 19:17:21 2026",
+      "rocket",
+      5000
+    ],
+    [
+      13,
+      "Tue May  5 19:17:56 2026",
+      "rocket",
+      5000
     ]
   ],
-  "max_description_size": 7
+  "max_description_size": 6,
+  "budget": {
+    "May": 5000
+  }
 }

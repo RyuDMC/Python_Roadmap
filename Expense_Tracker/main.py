@@ -1,5 +1,7 @@
 import argparse
 
+from functionalities import check_budget
+
 parse = argparse.ArgumentParser(description = "Expense Tracker")
 subparsers = parse.add_subparsers(dest = "command", help = "available commands")
 
@@ -23,6 +25,11 @@ parse_list = subparsers.add_parser("list", help = "show all expenses")
 #command summary
 parse_summary = subparsers.add_parser("summary", help = "show summary of expense")
 parse_summary.add_argument("--mount", type = str)
+
+#command budget
+parse_budget = subparsers.add_parser("budget", help = "budget of month")
+parse_budget.add_argument("--month", type = str)
+parse_budget.add_argument("--amount", type = int)
 
 args = parse.parse_args()
 
@@ -55,3 +62,13 @@ elif args.command == "summary":
   else: 
     from functionalities import summary
     print(f"Total expenses: {summary()}")
+
+elif args.command == "budget":
+  calendar = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  if args.month in calendar == 0:
+    print("Invalid month")
+  else:
+    from functionalities import set_budget
+    set_budget(args.month, args.amount)
+
+check_budget()
