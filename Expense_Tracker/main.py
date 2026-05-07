@@ -31,6 +31,9 @@ parse_budget = subparsers.add_parser("budget", help = "budget of month")
 parse_budget.add_argument("--month", type = str)
 parse_budget.add_argument("--amount", type = int)
 
+#command export
+parse_export = subparsers.add_parser("export", help = "export expenses in a CSV file")
+
 args = parse.parse_args()
 
 if args.command == "add":
@@ -53,7 +56,13 @@ elif args.command == "delete":
 
 elif args.command == "list":
   from functionalities import show
-  show()
+  data = show()
+  
+  for row in range(len(data)):
+    for col in range(len(data[0])):
+      print(data[row][col], end = " ")
+    print("\n", end = "")
+    
 
 elif args.command == "summary":
   if args.mount:
@@ -70,5 +79,9 @@ elif args.command == "budget":
   else:
     from functionalities import set_budget
     set_budget(args.month, args.amount)
+
+elif args.command == "export":
+  from functionalities import export
+  export()
 
 check_budget()

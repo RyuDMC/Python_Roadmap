@@ -1,4 +1,5 @@
 import os
+import csv
 import time
 import json
 
@@ -10,14 +11,13 @@ def add(description, amount):
       try:
         data = json.load(jsonfile)
       except:
-        data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11, "budget" : {}}
+        data = {"last_id" : 0, "expenses" : [], "budget" : {}}
   else:
-    data = {"last_id" : 0, "expenses" : [], "max_description_size" : 11, "budget": {}}
+    data = {"last_id" : 0, "expenses" : [], "budget": {}}
 
   new_id = data["last_id"] + 1
   data["last_id"] = new_id
   data["expenses"].append([new_id, time.ctime(), description, amount])
-  data["max_description_size"] = len(description)
   
   with open(filename, "w") as jsonfile:
     json.dump(data, jsonfile, indent = 2)
@@ -55,7 +55,6 @@ def delete(id):
           id += 1
           i[0] = id
         data["last_id"] = id
-        data["max_description_size"] = max(data["max_description_size"], len(i[2]))
     with open(filename, "w") as jsonfile:
       json.dump(data, jsonfile, indent = 2)
   else:
@@ -65,15 +64,29 @@ def show():
   if os.path.exists(filename) and os.path.getsize(filename) > 0:
     with open(filename, "r") as jsonfile:
       data = json.load(jsonfile)
-      blank_spaces = data["max_description_size"] - 10
-      print(f"ID time {19 * " "} Description{blank_spaces * " "}Expense")
-      for items in data["expenses"]:
-        sub_blank_spaces = 1
-        if len(items[2]) > 11:
-          sub_blank_spaces = len(items[2]) - blank_spaces - 9
-        else:
-          sub_blank_spaces = blank_spaces + 11 - len(items[2])
-        print(f"{items[0]}  {items[1]} {items[2]}{sub_blank_spaces * " "}{items[3]}")
+
+      expenses = data["expenses"]
+      expenses.insert(0, ["ID", "Date", "Description", "Amount"])
+
+      #calcular anchos
+      wide = []
+      for col in range(len(expenses[0])):
+        max_len = max(len((str(row[col]))) for row in expenses)
+        wide.append(max_len + 1)
+
+
+      #formatear datos
+      expenses_formated = []
+      for i, row in enumerate(expenses):
+        formated_row = []
+        for j, val in enumerate(row):
+          if isinstance(val, (int, float)) and i > 0:
+            formated_row.append(f"{str(val):>{wide[j]}}")
+          else:
+            formated_row.append(f"{str(val):<{wide[j]}}")
+        expenses_formated.append(formated_row)
+
+      return expenses_formated
   else:
     print("Error, Empty List")
         
@@ -125,3 +138,22 @@ def check_budget():
         amount = month_summary(month)
         if amount > data["budget"][month]:
           print(f"Month budget exceded")
+
+
+def export():
+  if os.path.exists(filename) and os.path.getsize(filename) > 0:
+    with open(filename, "r") as jsonfile:
+      data = json.load(jsonfile)
+      csv_data = show()
+      
+      try:
+        with open("output.cvs", "w", newline = "", encoding = "utf-8") as file:
+          writer = csv.writer(file)
+          writer.writerows(csv_data)
+          print("Data exported successfully")
+      except IOError as e:
+        print(f"Error creating file: {e}")
+      except Exception as e:
+        print(f"Unexpected error: {e}")
+  else:
+    print("Error, Empty List")
