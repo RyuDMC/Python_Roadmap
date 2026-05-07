@@ -14,6 +14,8 @@ To execute the CLI run the main.py script and use the right indications after.
 
 5/ summary -> show a summary of expenses
 
+6/ export -> create a CSV file with expenses
+
 #Second command
 
 --description -> add the description of added expense
