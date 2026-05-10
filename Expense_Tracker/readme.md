@@ -34,3 +34,6 @@ To execute the CLI run the main.py script and use the right indications after.
 3/ update --ID 3 --amount 200
 
 Francis if you see some error tell to me, I didn't start the debbugin process.
+
+
+https://roadmap.sh/projects/expense-tracker
