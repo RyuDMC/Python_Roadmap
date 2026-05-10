@@ -1,6 +1,6 @@
-This is a repository to practice backend with Python skills
+This is a repository to practice backend with Python skills.
 
 1 #https://github.com/RyuDMC/Python_Roadmap/tree/master/GitHub_User_Activity
-2 #https://github.com/RyuDMC/Python_Roadmap/tree/master/Expense_Tracker
 
-https://roadmap.sh/projects/expense-tracker
+2 #https://roadmap.sh/projects/expense-tracker
+
