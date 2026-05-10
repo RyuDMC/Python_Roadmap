@@ -8,12 +8,12 @@ subparsers = parse.add_subparsers(dest = "command", help = "available commands")
 #command add
 parse_add = subparsers.add_parser("add", help = "add expense")
 parse_add.add_argument("--description", type = str, help = "expense's description")
-parse_add.add_argument("--amount", type = int, help = "amount")
+parse_add.add_argument("--amount", type = float, help = "amount")
 
 #command update
 parse_update = subparsers.add_parser("update", help = "update expense")
 parse_update.add_argument("--ID", type = int)
-parse_update.add_argument("--amount", type = int)
+parse_update.add_argument("--amount", type = float)
 
 #command delete
 parse_delete = subparsers.add_parser("delete", help = "delete expense")
@@ -29,7 +29,7 @@ parse_summary.add_argument("--mount", type = str)
 #command budget
 parse_budget = subparsers.add_parser("budget", help = "budget of month")
 parse_budget.add_argument("--month", type = str)
-parse_budget.add_argument("--amount", type = int)
+parse_budget.add_argument("--amount", type = float)
 
 #command export
 parse_export = subparsers.add_parser("export", help = "export expenses in a CSV file")
